@@ -1,6 +1,10 @@
 import axios from 'axios'
+import { imageUpload } from '../api/utils';
+import { useState } from 'react';
 
 const AddFood = () => {
+    const [imagePreview, setImagePreview] = useState()
+    const [imageText, setImageText] = useState('Upload Image')
     const handleFormSubmit = async (e) => {
         e.preventDefault()
         const form = e.target
@@ -11,17 +15,25 @@ const AddFood = () => {
         const rating = form.rating.value
         const category = form.category.value
         const description = form.description.value
-        const image = form.image.file[0]
+        const image = form.image.files[0]
 
-        const foodData = {
-            price,
-            food_title,
-            location,
-            rating,
-            category,
-            description
-        }
+
+
         try {
+
+            const image_url = await imageUpload(image)
+
+            const foodData = {
+                price,
+                food_title,
+                location,
+                rating,
+                category,
+                description,
+                image: image_url,
+            }
+            console.table(foodData)
+
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/food`, foodData)
 
         } catch (err) {
@@ -29,6 +41,12 @@ const AddFood = () => {
             console.log('Hi, i am error', err.message)
         }
     }
+
+    const handleImage = image => {
+        setImagePreview(URL.createObjectURL(image))
+        setImageText(image.name)
+    }
+
     return (
         <div>
             <div className='flex justify-center items-center min-h-[calc(100vh-306px)] my-12'>
@@ -124,23 +142,29 @@ const AddFood = () => {
                         </div>
 
                         {/* for image upload  */}
-                        <div className=' p-4 bg-white w-full  m-auto rounded-lg'>
+                        <div className=' p-4 bg-white w-full  m-auto rounded-lg flex'>
                             <div className='file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg'>
                                 <div className='flex flex-col w-max mx-auto text-center'>
                                     <label>
                                         <input
                                             className='text-sm cursor-pointer w-36 hidden'
                                             type='file'
+                                            onChange={e => handleImage(e.target.files[0])}
                                             name='image'
                                             id='image'
                                             accept='image/*'
                                             hidden
                                         />
                                         <div className='bg-rose-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-rose-500'>
-                                            Upload Image
+                                            {imageText}
                                         </div>
                                     </label>
                                 </div>
+                            </div>
+                            <div className='w-16 h-17'>
+                                {
+                                    imagePreview && <img src={imagePreview} />
+                                }
                             </div>
                         </div>
 
