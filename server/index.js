@@ -51,6 +51,12 @@ async function run() {
       const result = await foodCollection.findOne(query)
       res.send(result)
     })
+    // Save a addFood data in database 
+    app.post('/food', async(req, res)=>{
+      const foodData = req.body
+      const result = await foodCollection.insertOne(foodData)
+      res.send(result)
+    })
 
 
 
