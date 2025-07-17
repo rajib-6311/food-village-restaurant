@@ -6,11 +6,13 @@ const Navbar = () => {
     const links = <>
         <li><NavLink to='/'><span className="font-bold">Home</span></NavLink></li>
         <li><NavLink to='/add-food'><span className="font-bold">AddFood</span></NavLink></li>
+        <li><NavLink to='/login'><span className="font-bold">Login</span></NavLink></li>
+        {/* <li><NavLink to='/register'><span className="font-bold">Register</span></NavLink></li> */}
     
     </>
 
     return (
-        <div className="container mx-auto">
+        <div className="">
             <div className="navbar bg-base-100 shadow-sm">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -33,6 +35,7 @@ const Navbar = () => {
                 <div className="navbar-end">
                     <a className="btn">Button</a>
                 </div>
+                
             </div>
         </div>
     );

@@ -3,12 +3,13 @@ import { imageUpload } from '../api/utils';
 import { useState } from 'react';
 
 const AddFood = () => {
+
     const [imagePreview, setImagePreview] = useState()
     const [imageText, setImageText] = useState('Upload Image')
+
     const handleFormSubmit = async (e) => {
         e.preventDefault()
         const form = e.target
-        // const foodId =_id
         const price = parseFloat(form.price.value)
         const food_title = form.food_title.value
         const location = form.location.value
@@ -17,12 +18,8 @@ const AddFood = () => {
         const description = form.description.value
         const image = form.image.files[0]
 
-
-
         try {
-
             const image_url = await imageUpload(image)
-
             const foodData = {
                 price,
                 food_title,
@@ -32,9 +29,8 @@ const AddFood = () => {
                 description,
                 image: image_url,
             }
-            console.table(foodData)
-
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/food`, foodData)
+            console.log(data);
 
         } catch (err) {
             console.log(err)
@@ -48,8 +44,8 @@ const AddFood = () => {
     }
 
     return (
-        <div>
-            <div className='flex justify-center items-center min-h-[calc(100vh-306px)] my-12'>
+        <div className='bg-[linear-gradient(115deg,_#9F7AEA,_#FEE2FE)] py-10'>
+            <div className='flex justify-center items-center min-h-[calc(100vh-306px)]'>
                 <section className=' p-2 md:p-6 mx-auto bg-white rounded-md shadow-md '>
                     <h2 className='text-lg font-semibold text-gray-700 capitalize '>
                         Post a Food

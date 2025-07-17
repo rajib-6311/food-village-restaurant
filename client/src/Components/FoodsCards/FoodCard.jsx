@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 
 
 const FoodCard = ({food}) => {
-    const {_id, food_title,location,image,category} = food;
+    const {_id, food_title,location,image,category} = food || {}
+
     return (
         <Link to={`/food/${_id}`} className="py-2">
             <img className="w-65 h-65" src={image} alt="" />
