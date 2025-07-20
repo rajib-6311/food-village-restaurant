@@ -7,6 +7,7 @@ const Login = () => {
     const navigation = useNavigate()
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    
     const handleRegisterSubmit = (e) => {
         e.preventDefault();
         axios.post(`${import.meta.env.VITE_API_URL}/login`, {
